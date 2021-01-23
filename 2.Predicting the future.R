@@ -136,3 +136,101 @@ arima(y, order = c(0,0,0))
 mean(y)
 var(y)
 
+# Exercise
+# Simulate the random walk model
+# The random walk (RW) model is also a basic time series model. It is the cumulative sum (or integration) of a mean zero white noise (WN) series, such that the first difference series of a RW is a WN series. Note for reference that the RW model is an ARIMA(0, 1, 0) model, in which the middle entry of 1 indicates that the model's order of integration is 1.
+# 
+# The arima.sim() function can be used to simulate data from the RW by including the model = list(order = c(0, 1, 0)) argument. We also need to specify a series length n. Finally, you can specify a sd for the series (increments), where the default value is 1.
+# 
+# Instructions
+# 100 XP
+# Instructions
+# 100 XP
+# Use arima.sim() to generate a RW model. Set the model argument equal to list(order = c(0, 1, 0)) to generate a RW-type model and set n equal to 100 to produce 100 observations. Save this to random_walk.
+# Use ts.plot() to plot your random_walk data.
+# Use diff() to calculate the first difference of your random_walk data. Save this as random_walk_diff.
+# Use another call to ts.plot() to plot random_walk_diff.
+
+# Generate a RW model using arima.sim
+random_walk <- arima.sim(model = list(order = c(0, 1, 0)), n = 100)
+
+# Plot random_walk
+ts.plot(random_walk)
+
+# Calculate the first difference series
+random_walk_diff <- diff(random_walk)
+
+# Plot random_walk_diff
+ts.plot(random_walk_diff)
+
+
+# Exercise
+# Simulate the random walk model with a drift
+# A random walk (RW) need not wander about zero, it can have an upward or downward trajectory, i.e., a drift or time trend. This is done by including an intercept in the RW model, which corresponds to the slope of the RW time trend.
+# 
+# For an alternative formulation, you can take the cumulative sum of a constant mean white noise (WN) series, such that the mean corresponds to the slope of the RW time trend.
+# 
+# To simulate data from the RW model with a drift you again use the arima.sim() function with the model = list(order = c(0, 1, 0)) argument. This time, you should add the additional argument mean = ... to specify the drift variable, or the intercept.
+# 
+# Instructions
+# 100 XP
+# Use arima.sim() to generate another RW model. Set the model argument equal to list(order = c(0, 1, 0)) to generate a RW-type model and set n equal to 100 to produce 100 observations. Set the mean argument to 1 to produce a drift. Save this to rw_drift.
+# Use ts.plot() to plot your rw_drift data.
+# Use diff() to calculate the first difference of your rw_drift data. Save this as rw_drift_diff.
+# Use another call to ts.plot() to plot rw_drift_diff.
+
+
+# Generate a RW model with a drift uing arima.sim
+rw_drift <- arima.sim(model = list(order = c(0,1,0)), n = 100, mean = 1)
+
+# Plot rw_drift
+ts.plot(rw_drift)
+
+# Calculate the first difference series
+rw_drift_diff <- diff(rw_drift)
+
+# Plot rw_drift_diff
+ts.plot(rw_drift_diff)
+mean(rw_drift_diff)
+
+
+# Exercise
+# Estimate the random walk model
+# For a given time series y we can fit the random walk model with a drift by first differencing the data, then fitting the white noise (WN) model to the differenced data using the arima() command with the order = c(0, 0, 0)) argument.
+# 
+# The arima() command displays information or output about the fitted model. Under the Coefficients: heading is the estimated drift variable, named the intercept. Its approximate standard error (or s.e.) is provided directly below it. The variance of the WN part of the model is also estimated under the label sigma^2.
+# 
+# Instructions
+# 70 XP
+# Instructions
+# 70 XP
+# The time series random_walk has already been loaded, and is shown in the adjoining figure. Use diff() to generate the first difference of the data. Save this to rw_diff.
+# Use ts.plot() to plot your differenced data
+# Use arima() to fit the WN model for the differenced data. To do so, set the x argument to rw_diff and set the order argument to c(0, 0, 0). Store the model in model_wn.
+# Store the intercept value of model_wn in int_wn. You can obtain this value using model_wn$coef.
+# Use ts.plot() to reproduce your original plot of random_walk.
+# Add the estimated time trend to the adjoining plot with the function abline(). You can use int_wn as the second argument.
+
+random_walk <- c(0,0.840799690805892,0.637459389341622,0.757921658699468,0.51187422142312,0.113766891514572,0.278972783338605,0.277594629974007,0.603058933300874,2.91209633642732,3.18199136208394,2.55157314365465,3.26756203062092,4.99979931564387,7.10915802250204,8.01070864926096,8.23772461506037,8.70157227268806,9.05126103820082,13.3200713895243,12.167575412894,11.5324303105757,12.2601004793325,12.5767819422196,12.6632633175434,12.7256680349732,13.1994836806694,12.8396495033226,13.5061940806857,15.4816848106994,16.177107725103,16.8365295156745,16.6163362311588,16.1808336886557,16.9662659934889,16.7270308469477,17.6561798270108,20.8901636724502,20.0567603436916,22.4168556898516,23.1628256130545,22.9168361903724,21.9326982045095,22.65474670326,23.6325743016245,24.8637728096747,25.5358779389007,27.2225699268809,27.3721605280673,29.0197579376152,30.86984194858,32.4859913444825,33.1883373188887,33.7998279266371,32.7718376006665,33.3293449130956,36.0168049817462,36.4458500836042,38.2388466589622,39.1157216648363,38.7992108420878,39.2275167845668,37.5690113188738,40.0882062820111,40.5380768982454,40.757863652738,41.5757014101746,41.1067983652453,41.1064560275605,40.645532029424,39.5554850868954,40.4312197530977,41.9604182429803,43.6866496098288,45.2350442037095,45.9024581686138,47.540457130699,49.0971826208823,48.9170239101692,48.0796342742815,46.7765324003763,47.9775098038997,46.4334192966129,45.9453639155814,47.0727461261722,47.1890042341391,51.2925270988872,52.1247376806133,51.3796798321698,52.127045835946,51.2230171217941,52.6301981357515,52.4262448587789,51.3564738575462,52.2017865810857,53.3817249795485,55.0244437963563,55.9303590282021,55.5117187960721,58.308031867784,58.1183345226755)
+  
+random_walk <- ts(random_walk, start = 1, end = 100, frequency = 1)
+
+# Difference your random_walk data
+rw_diff <- diff(random_walk)
+
+# Plot rw_diff
+ts.plot(rw_diff)
+
+# Now fit the WN model to the differenced data
+model_wn <- arima(rw_diff, order = c(0,0,0))
+
+# Store the value of the estimated time trend (intercept)
+int_wn <- model_wn$coef
+
+# Plot the original random_walk data
+ts.plot(random_walk)
+
+# Use abline(0, ...) to add time trend to the figure
+abline(0, int_wn)
+
+
