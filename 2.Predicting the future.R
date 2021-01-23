@@ -135,5 +135,3 @@ arima(y, order = c(0,0,0))
 # Calculate the sample mean and sample variance of y
 mean(y)
 var(y)
-
-
