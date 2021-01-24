@@ -262,3 +262,5 @@ rw_drift <- cumsum(wn_drift)
 
 # Plot all four data objects
 plot.ts(cbind(white_noise, random_walk, wn_drift, rw_drift))
+
+
